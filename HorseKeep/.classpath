@@ -11,7 +11,5 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/Documents/BukkitDev/lib/craftbukkit/craftbukkit-1.7.2-R0.3.jar"/>
-	<classpathentry kind="lib" path="D:/Documents/BukkitDev/lib/vault/Vault.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
