@@ -1,0 +1,8 @@
+name: HorseKeep
+main: main.java.com.gmail.falistos.HorseKeep.HorseKeep
+version: 0.3.0
+depends: [Vault]
+commands:
+    horse:
+        description: Manage your horses
+        aliases: [h, khorse, keephorse]
