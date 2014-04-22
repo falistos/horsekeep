@@ -391,6 +391,8 @@ public class HorseManager {
     
     public void summon(String horseIdentifier, Location loc)
     {
+    	this.data.reload();
+    	
     	UUID horseUUID = this.getHorseUUID(horseIdentifier);
     	
     	ConfigurationSection horseCfgSection = this.data.getHorsesData().getConfigurationSection("horses."+horseUUID.toString());
@@ -429,10 +431,10 @@ public class HorseManager {
     	{
     		spawnedHorse.setCarryingChest(true);
     		
-    		ItemStack[] content;
-    		content = ((List<ItemStack>) this.data.getHorsesData().get("horses."+horseUUID+".chestcontent")).toArray(new ItemStack[0]);
-    		
-     		spawnedHorse.getInventory().setContents((ItemStack[]) content);
+    		ArrayList<ItemStack> conversion = new ArrayList<ItemStack>();
+    		for (Object o : this.data.getHorsesData().getList("horses."+horseUUID+".chestcontent")) conversion.add((ItemStack) o);
+
+     		spawnedHorse.getInventory().setContents(conversion.toArray(new ItemStack[conversion.size()]));
     	}
 
     	this.data.getHorsesData().createSection("horses."+spawnedHorse.getUniqueId());
