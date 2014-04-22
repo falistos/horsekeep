@@ -25,7 +25,10 @@ public class CommandSetIdentifier extends ConfigurableCommand {
 			return;
 		}
 		
-		if (args.length < 3) { sender.sendMessage(this.getPrefix() + ChatColor.GOLD + plugin.lang.get("missingHorseNewIdentifier")); }
+		if (args.length < 3) { 
+			sender.sendMessage(this.getPrefix() + ChatColor.GOLD + plugin.lang.get("missingHorseNewIdentifier")); 
+			return;
+		}
 
 		Boolean hasWhiteSpace = false;
 		for (char c : args[2].toCharArray()) {
