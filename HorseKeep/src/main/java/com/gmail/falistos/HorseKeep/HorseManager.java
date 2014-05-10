@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import net.minecraft.server.v1_7_R1.EntityInsentient;
+import net.minecraft.server.v1_7_R1.GenericAttributes;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -11,6 +14,8 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.craftbukkit.v1_7_R1.entity.CraftLivingEntity;
+import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Horse;
@@ -348,7 +353,8 @@ public class HorseManager {
     	this.data.getHorsesData().set("horses."+horse.getUniqueId().toString()+".style", horse.getStyle().toString());
     	this.data.getHorsesData().set("horses."+horse.getUniqueId().toString()+".color", horse.getColor().toString());
     	this.data.getHorsesData().set("horses."+horse.getUniqueId().toString()+".jumpstrength", horse.getJumpStrength());
-    	this.data.getHorsesData().set("horses."+horse.getUniqueId().toString()+".maxhealth", horse.getMaxHealth());
+    	this.data.getHorsesData().set("horses."+horse.getUniqueId().toString()+".maxhealth", ((Damageable)horse).getMaxHealth());
+    	this.data.getHorsesData().set("horses."+horse.getUniqueId().toString()+".speed", ((EntityInsentient)((CraftLivingEntity)horse).getHandle()).getAttributeInstance(GenericAttributes.d).getValue());
     	
     	if (horse.getCustomName() != null)
     	{
@@ -356,7 +362,7 @@ public class HorseManager {
     	}
     	else this.data.getHorsesData().set("horses."+horse.getUniqueId().toString()+".name", null);
 
-    	this.data.getHorsesData().set("horses."+horse.getUniqueId().toString()+".lasthealth", horse.getHealth());
+    	this.data.getHorsesData().set("horses."+horse.getUniqueId().toString()+".lasthealth", ((Damageable)horse).getHealth());
     	this.data.getHorsesData().set("horses."+horse.getUniqueId().toString()+".age", horse.getAge());
     	
     	if (horse.getInventory().getSaddle() != null)
@@ -408,6 +414,8 @@ public class HorseManager {
     	spawnedHorse.setHealth(Double.parseDouble(this.data.getHorsesData().getString("horses."+horseUUID+".lasthealth")));
     	spawnedHorse.setJumpStrength(Double.parseDouble(this.data.getHorsesData().getString("horses."+horseUUID+".jumpstrength")));
     	spawnedHorse.setAge(Integer.parseInt(this.data.getHorsesData().getString("horses."+horseUUID+".age")));
+    	double speed = this.data.getHorsesData().getDouble("horses."+horseUUID+".speed", 33.14);
+    	((EntityInsentient)((CraftLivingEntity)spawnedHorse).getHandle()).getAttributeInstance(GenericAttributes.d).setValue(speed);
 
     	if (this.data.getHorsesData().getBoolean("horses."+horseUUID+".tamed"))
     	{
