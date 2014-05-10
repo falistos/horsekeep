@@ -77,6 +77,7 @@ public class HorseKeep extends JavaPlugin implements Listener
 		// Horses Data
 		this.data = new HorseData(this, "horses.yml");
 		this.data.migrate();
+		this.data.migrateUUID();
 		
 		// Locale
 		this.lang = new Locale(this, "language_"+getConfig().getString("language"),"language_en.yml");
