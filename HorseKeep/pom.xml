@@ -3,6 +3,11 @@
   <groupId>HorseKeep</groupId>
   <artifactId>HorseKeep</artifactId>
   <version>0.3.0 BETA</version>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.5</maven.compiler.source>
+    <maven.compiler.target>1.5</maven.compiler.target>
+  </properties>
   <repositories>
     <!-- Bukkit can be found at the following repository -->
     <repository>
