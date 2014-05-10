@@ -3,8 +3,12 @@ package main.java.com.gmail.falistos.HorseKeep;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map.Entry;
 import java.util.logging.Level;
 
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -40,6 +44,39 @@ public class HorseData {
 			
 			plugin.getLogger().info("Migrated horse data to horses.yml successfully");
 		}
+	}
+	
+	// Migration for player UUID
+	public void migrateUUID()
+	{
+		ConfigurationSection horsesSection = this.getHorsesData().getConfigurationSection("horses");
+		HashMap<String, String> players = new HashMap<String, String>();
+		
+		if (horsesSection == null) { return; }
+		
+		for(String key : horsesSection.getKeys(false))
+		{
+			if (horsesSection.isSet(key+".owner"))
+			{
+				if (horsesSection.get(key+".ownerUUID") == null)
+				players.put(key, horsesSection.getString(key+".owner"));
+			}
+		}
+		
+		for(Entry<String, String> entry : players.entrySet())
+		{
+			String horseUUID = entry.getKey();
+			String playerName = entry.getValue();
+			
+			OfflinePlayer player = Bukkit.getServer().getOfflinePlayer(playerName);
+
+			this.getHorsesData().set("horses."+horseUUID+".ownerUUID", player.getUniqueId().toString());
+			this.getHorsesData().set("horses."+horseUUID+".owner", null);
+		}
+		
+		this.save();
+		
+		plugin.getLogger().info(players.size()+" players successfully updated to UUID format");
 	}
 	
 	public void reload() {
