@@ -53,7 +53,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class HorseKeep extends JavaPlugin implements Listener
 {
-	public String version = "0.3.0";
+	public String version = "0.3.1";
 
 	public Permission perm = null;
 	public HorseManager manager = null;
