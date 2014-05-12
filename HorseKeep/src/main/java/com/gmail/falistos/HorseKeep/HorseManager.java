@@ -93,15 +93,23 @@ public class HorseManager {
 		
 		return false;
     }
+    
+    public String getOwnerName(UUID horseUUID)
+    {
+    	UUID ownerUUID = this.getOwner(horseUUID);
+    	String ownerName = UUIDUtils.getPlayerName(ownerUUID);
+    	
+    	return ownerName;
+    }
 
-    public String getOwner(String horseIdentifier)
+    public UUID getOwner(String horseIdentifier)
     {
     	return this.getOwner(this.getHorseUUID(horseIdentifier));
     }
 
-    public String getOwner(UUID horseUUID)
+    public UUID getOwner(UUID horseUUID)
     {
-    	return this.data.getHorsesData().getString("horses."+horseUUID+".owner");
+    	return UUID.fromString(this.data.getHorsesData().getString("horses."+horseUUID+".ownerUUID"));
     }
 
     public List<String> getHorseMembers(Entity horse)
@@ -123,7 +131,7 @@ public class HorseManager {
     {
     	String horseIdentifier = this.getHorseIdentifier(horseUUID);
     	
-    	if (isHorseMember(horseIdentifier, player.getName()) || this.isHorseOwner(horseIdentifier, player.getName()))
+    	if (this.isHorseMember(horseIdentifier, player.getUniqueId()) || this.isHorseOwner(horseIdentifier, player.getUniqueId()))
     	{
     		return true;
     	}
@@ -131,44 +139,44 @@ public class HorseManager {
     	return false;
     }
 
-    public void addHorseMember(String horseIdentifier, String playerName)
+    public void addHorseMember(String horseIdentifier, UUID playerUUID)
     {
     	List<String> horseMembers = this.getHorseMembers(this.getHorseUUID(horseIdentifier));
     	
-    	horseMembers.add(playerName);
+    	horseMembers.add(playerUUID.toString());
     	
     	this.data.getHorsesData().set("horses."+getHorseUUID(horseIdentifier)+".members", horseMembers);
     	
     	this.data.save();
     }
     
-    public void removeHorseMember(String horseIdentifier, String playerName)
+    public void removeHorseMember(String horseIdentifier, UUID playerUUID)
     {
     	List<String> horseMembers = this.getHorseMembers(this.getHorseUUID(horseIdentifier));
     	
-    	horseMembers.remove(playerName);
+    	horseMembers.remove(playerUUID.toString());
     	
     	this.data.getHorsesData().set("horses."+this.getHorseUUID(horseIdentifier)+".members", horseMembers);
     	
     	this.data.save();
     }
     
-    public boolean isHorseMember(String horseIdentifier, String playerName)
+    public boolean isHorseMember(String horseIdentifier, UUID playerUUID)
     {
     	List<String> horseMembers = this.getHorseMembers(this.getHorseUUID(horseIdentifier));
     	
-    	return horseMembers.contains(playerName);
+    	return horseMembers.contains(playerUUID.toString());
     }
 
-    public boolean isHorseOwner(Player player, Entity horse)
+    public boolean isHorseOwner(UUID playerUUID, Entity horse)
     {
-    	if (getOwner(horse.getUniqueId()).equalsIgnoreCase(player.getName())) return true;
+    	if (UUIDUtils.compareUUID(this.getOwner(horse.getUniqueId()), playerUUID)) return true;
     	return false;
     }
     
-    public boolean isHorseOwner(String horseIdentifier, String playerName)
+    public boolean isHorseOwner(String horseIdentifier, UUID playerUUID)
     {
-    	if (getOwner(horseIdentifier).equalsIgnoreCase(playerName)) return true;
+    	if (UUIDUtils.compareUUID(this.getOwner(horseIdentifier), playerUUID)) return true;
     	return false;
     }
 
@@ -197,7 +205,7 @@ public class HorseManager {
 	
 	public void setHorseOwner(Player player, Entity horse)
 	{
-		this.data.getHorsesData().set("horses."+horse.getUniqueId()+".owner", player.getName());
+		this.data.getHorsesData().set("horses."+horse.getUniqueId()+".ownerUUID", player.getUniqueId().toString());
 
 		this.data.getHorsesData().set("horses."+horse.getUniqueId()+".identifier", getNewHorseIdentifier());
 		
@@ -206,11 +214,16 @@ public class HorseManager {
 		this.data.save();
 	}
 	
-	public void setHorseOwner(String playerName, UUID horseUUID)
+	public void setHorseOwner(UUID playerUUID, UUID horseUUID)
 	{
-		this.data.getHorsesData().set("horses."+horseUUID.toString()+".owner", playerName);
+		this.data.getHorsesData().set("horses."+horseUUID.toString()+".ownerUUID", playerUUID);
 		
 		this.data.save();
+	}
+
+	public void setHorseOwner(String playerName, UUID horseUUID)
+	{
+		this.setHorseOwner(UUIDUtils.getPlayerUUID(playerName), horseUUID);
 	}
 
 	public boolean isHorseIdentifierTaken(String identifier)
@@ -293,13 +306,13 @@ public class HorseManager {
     		player.getVehicle().eject();
     	}
     }
-
-    public List<String> getOwnedHorses(Player player)
+    
+	public List<String> getOwnedHorses(String playerName)
     {
-    	return this.getOwnedHorses(player.getName());
+    	return this.getOwnedHorses(UUIDUtils.getPlayerUUID(playerName));
     }
     
-    public List<String> getOwnedHorses(String playerName)
+    public List<String> getOwnedHorses(UUID playerUUID)
     {
     	List <String> ownedHorses = new ArrayList<String>();
     	
@@ -307,10 +320,12 @@ public class HorseManager {
     	
 		ConfigurationSection horsesSection = this.data.getHorsesData().getConfigurationSection("horses");
 		
-		for(String key : horsesSection.getKeys(false)){
-			if (this.data.getHorsesData().isSet("horses."+key+".owner"))
+		for(String key : horsesSection.getKeys(false)) {
+			if (this.data.getHorsesData().isSet("horses."+key+".ownerUUID"))
 			{
-				if (this.data.getHorsesData().getString("horses."+key+".owner").equalsIgnoreCase(playerName))
+				UUID ownerUUID = UUID.fromString(this.data.getHorsesData().getString("horses."+key+".ownerUUID"));
+				
+				if (UUIDUtils.compareUUID(ownerUUID, playerUUID))
 				{
 					ownedHorses.add(key);
 				}
@@ -340,7 +355,7 @@ public class HorseManager {
     	return null;
     }
     
-    public void store(Horse horse, String playerName)
+    public void store(Horse horse)
     {
     	this.data.getHorsesData().set("horses."+horse.getUniqueId().toString()+".stored", true);
     	this.data.getHorsesData().set("horses."+horse.getUniqueId().toString()+".tamed", horse.isTamed());

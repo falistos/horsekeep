@@ -36,7 +36,7 @@ public class CommandStore extends ConfigurableCommand {
 			return;
 		}
 
-		if (!plugin.manager.isHorseOwner(player, horse) && !plugin.perm.has(sender, "horsekeep.admin"))
+		if (!plugin.manager.isHorseOwner(player.getUniqueId(), horse) && !plugin.perm.has(sender, "horsekeep.admin"))
 		{
 			sender.sendMessage(this.getPrefix() + ChatColor.GOLD + plugin.lang.get("dontOwnThisHorse"));
 			return;
@@ -44,7 +44,7 @@ public class CommandStore extends ConfigurableCommand {
 		
 		horse.eject();
 		
-		plugin.manager.store(horse, player.getName());
+		plugin.manager.store(horse);
 		
 		horse.remove();
         

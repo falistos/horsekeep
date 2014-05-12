@@ -30,7 +30,7 @@ public class CommandGetIdentifier extends ConfigurableCommand {
 			return;
 		}
 
-		if (!plugin.manager.isHorseOwner(player, horse) && !plugin.perm.has(sender, "horsekeep.admin"))
+		if (!plugin.manager.isHorseOwner(player.getUniqueId(), horse) && !plugin.perm.has(sender, "horsekeep.admin"))
 		{
 			player.sendMessage(this.getPrefix() + ChatColor.GOLD + plugin.lang.get("dontOwnThisHorse"));
 			return;

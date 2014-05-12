@@ -31,9 +31,9 @@ public class CommandTeleport extends ConfigurableCommand {
 			return;
 		}
 
-		if (!plugin.manager.isHorseOwner(horseIdentifier, player.getName()) && !plugin.perm.has(player, "horsekeep.admin"))
+		if (!plugin.manager.isHorseOwner(horseIdentifier, player.getUniqueId()) && !plugin.perm.has(player, "horsekeep.admin"))
 		{
-			player.sendMessage(this.getPrefix()+ ChatColor.GOLD + plugin.lang.get("dontOwnpluginHorse"));
+			player.sendMessage(this.getPrefix()+ ChatColor.GOLD + plugin.lang.get("dontOwnHorse"));
 			return;
 		}
 		

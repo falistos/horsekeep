@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.UUID;
 
 import main.java.com.gmail.falistos.HorseKeep.commands.CommandAddMember;
 import main.java.com.gmail.falistos.HorseKeep.commands.CommandAdminList;
@@ -326,8 +327,8 @@ public class HorseKeep extends JavaPlugin implements Listener
         if(this.manager.isHorse(entity)) {
             if (this.manager.isOwned(entity.getUniqueId()))
             {
-            	String ownerName = this.manager.getOwner(entity.getUniqueId());
-            	Player owner = Bukkit.getPlayerExact(ownerName);
+            	UUID ownerUUID = this.manager.getOwner(entity.getUniqueId());
+            	Player owner = Bukkit.getPlayer(ownerUUID);
 
             	if (owner.isOnline()) owner.sendMessage(this.getChatPrefix() + ChatColor.RED + this.lang.get("horseDead").replace("%id", this.manager.getHorseIdentifier(entity.getUniqueId())));
             	
@@ -394,7 +395,7 @@ public class HorseKeep extends JavaPlugin implements Listener
             			}
             		}
             		
-            		if (this.manager.getOwnedHorses(event.getPlayer()).size() >= limit)
+            		if (this.manager.getOwnedHorses(event.getPlayer().getUniqueId()).size() >= limit)
             		{
             			event.getPlayer().sendMessage(this.getChatPrefix() + ChatColor.GOLD + this.lang.get("horsesLimitReached"));
             			return;
@@ -418,7 +419,11 @@ public class HorseKeep extends JavaPlugin implements Listener
         {
         	if (!this.manager.canMountHorse(event.getPlayer(), horse) && !perm.has(event.getPlayer(), "horsekeep.bypass.mount"))
         	{
-            	event.getPlayer().sendMessage(this.getChatPrefix() + ChatColor.RED + this.lang.get("horseBelongsTo").replace("%player", this.manager.getOwner(horse.getUniqueId())));
+    			String ownerName = this.manager.getOwnerName(horse.getUniqueId());
+
+		    	if (ownerName == null) ownerName = "Unknown";
+		    	
+            	event.getPlayer().sendMessage(this.getChatPrefix() + ChatColor.RED + this.lang.get("horseBelongsTo").replace("%player", ownerName));
             	
             	if (perm.has(event.getPlayer(), "horsekeep.admin")) { event.getPlayer().sendMessage(this.getChatPrefix() + this.lang.get("identifier") + " " + this.manager.getHorseIdentifier(this.manager.getHorseUUID(horse))); }
             	
@@ -455,7 +460,11 @@ public class HorseKeep extends JavaPlugin implements Listener
 	    	{
 	    		if (!this.manager.canMountHorse(player, horse) && !perm.has(player, "horsekeep.bypass.mount"))
 	    		{
-	    			player.sendMessage(this.getChatPrefix() + this.lang.get("horseBelongsTo").replace("%player", this.manager.getOwner(horse.getUniqueId())));
+	    			String ownerName = this.manager.getOwnerName(horse.getUniqueId());
+
+			    	if (ownerName == null) ownerName = "Unknown";
+			    		
+	    			player.sendMessage(this.getChatPrefix() + this.lang.get("horseBelongsTo").replace("%player", ownerName));
 	    			
 	    			event.setCancelled(true);
 	    		}

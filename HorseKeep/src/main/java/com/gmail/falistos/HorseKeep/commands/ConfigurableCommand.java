@@ -3,10 +3,12 @@ package main.java.com.gmail.falistos.HorseKeep.commands;
 import main.java.com.gmail.falistos.HorseKeep.HorseKeep;
 
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public class ConfigurableCommand {
 	HorseKeep plugin = null;
 	String prefix = null;
+	CommandSender sender = null;
 	
 	public ConfigurableCommand(HorseKeep plugin, CommandSender sender, String[] args)
 	{
@@ -15,7 +17,7 @@ public class ConfigurableCommand {
 	
 	public void sendMessage(String message, CommandSender sender)
 	{
-		sender.sendMessage(this.getPrefix() + plugin.lang.get(message));
+		sender.sendMessage(this.getPrefix() + this.plugin.lang.get(message));
 	}
 	
 	public void setPrefix(String prefix)
@@ -25,6 +27,15 @@ public class ConfigurableCommand {
 	
 	public String getPrefix()
 	{
-		return plugin.getChatPrefix();
+		return this.plugin.getChatPrefix();
+	}
+	
+	public Player getPlayer()
+	{
+		if (this.sender instanceof Player)
+		{
+			return (Player) this.sender;
+		}
+		return null;
 	}
 }

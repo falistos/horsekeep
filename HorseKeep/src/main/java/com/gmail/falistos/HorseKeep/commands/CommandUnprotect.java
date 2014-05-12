@@ -13,6 +13,8 @@ public class CommandUnprotect extends ConfigurableCommand {
 		
 		if (!(sender instanceof Player)) { sender.sendMessage(plugin.lang.get("canOnlyExecByPlayer")); return; }
 		
+		Player player = (Player) sender;
+		
 		if (args.length < 2)
 		{
 			sender.sendMessage(this.getPrefix() + ChatColor.GOLD + plugin.lang.get("missingHorseIdentifier"));
@@ -27,7 +29,7 @@ public class CommandUnprotect extends ConfigurableCommand {
 			return;
 		}
 
-		if (!plugin.manager.isHorseOwner(horseIdentifier, sender.getName()) && !plugin.perm.has(sender, "horsekeep.admin"))
+		if (!plugin.manager.isHorseOwner(horseIdentifier, player.getUniqueId()) && !plugin.perm.has(sender, "horsekeep.admin"))
 		{
 			sender.sendMessage(this.getPrefix() + ChatColor.GOLD + plugin.lang.get("dontOwnThisHorse"));
 			return;

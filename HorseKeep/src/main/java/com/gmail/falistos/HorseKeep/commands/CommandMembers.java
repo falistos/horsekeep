@@ -1,8 +1,10 @@
 package main.java.com.gmail.falistos.HorseKeep.commands;
 
 import java.util.List;
+import java.util.UUID;
 
 import main.java.com.gmail.falistos.HorseKeep.HorseKeep;
+import main.java.com.gmail.falistos.HorseKeep.UUIDUtils;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -35,7 +37,9 @@ public class CommandMembers extends ConfigurableCommand {
 		
 		if (sender instanceof Player)
 		{
-			if (!plugin.manager.isHorseOwner(horseIdentifier, sender.getName()) && !plugin.perm.has(sender, "horsekeep.admin"))
+			Player player = (Player) sender;
+			
+			if (!plugin.manager.isHorseOwner(horseIdentifier, player.getUniqueId()) && !plugin.perm.has(sender, "horsekeep.admin"))
 			{
 				sender.sendMessage(this.getPrefix() + ChatColor.GOLD + plugin.lang.get("dontOwnThisHorse"));
 				return;
@@ -46,7 +50,9 @@ public class CommandMembers extends ConfigurableCommand {
 		
 		List<String> horsesList = plugin.manager.getHorseMembers(plugin.manager.getHorseUUID(horseIdentifier));
 		
-        for (String memberName : horsesList) {
+        for (String memberUUID : horsesList) {
+        	String memberName = UUIDUtils.getPlayerName(UUID.fromString(memberUUID));
+        	if (memberName == null) { memberName = "Unknown"; }
         	sender.sendMessage("- "+ChatColor.AQUA+memberName);
         }
 	}

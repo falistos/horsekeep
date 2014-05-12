@@ -1,6 +1,7 @@
 package main.java.com.gmail.falistos.HorseKeep.commands;
 
 import main.java.com.gmail.falistos.HorseKeep.HorseKeep;
+import main.java.com.gmail.falistos.HorseKeep.UUIDUtils;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -12,6 +13,8 @@ public class CommandDeleteMember extends ConfigurableCommand {
 		super(plugin, sender, args);
 		
 		if (!(sender instanceof Player)) { sender.sendMessage(plugin.lang.get("canOnlyExecByPlayer")); return; }
+		
+		Player player = (Player) sender;
 		
 		if (!plugin.perm.has(sender, "horsekeep.member.remove") && !plugin.perm.has(sender, "horsekeep.admin"))
 		{
@@ -33,13 +36,10 @@ public class CommandDeleteMember extends ConfigurableCommand {
 			return;
 		}
 		
-		if (sender instanceof Player)
+		if (!plugin.manager.isHorseOwner(horseIdentifier, player.getUniqueId()) && !plugin.perm.has(sender, "horsekeep.admin"))
 		{
-			if (!plugin.manager.isHorseOwner(horseIdentifier, sender.getName()) && !plugin.perm.has(sender, "horsekeep.admin"))
-			{
-				sender.sendMessage(this.getPrefix() + ChatColor.GOLD + plugin.lang.get("dontOwnThisHorse"));
-				return;
-			}
+			sender.sendMessage(this.getPrefix() + ChatColor.GOLD + plugin.lang.get("dontOwnThisHorse"));
+			return;
 		}
 		
 		if (args.length < 3)
@@ -48,16 +48,16 @@ public class CommandDeleteMember extends ConfigurableCommand {
 			return;
 		}
 		
-		String playerName = args[2];
+		String memberName = args[2];
 
-		if (!plugin.manager.isHorseMember(horseIdentifier, playerName))
+		if (!plugin.manager.isHorseMember(horseIdentifier, UUIDUtils.getPlayerUUID(memberName)))
 		{
-			sender.sendMessage(this.getPrefix() + ChatColor.GOLD + plugin.lang.get("notMemberOfThisHorse").replace("%player", playerName));
+			sender.sendMessage(this.getPrefix() + ChatColor.GOLD + plugin.lang.get("notMemberOfThisHorse").replace("%player", memberName));
 			return;
 		}
 		
-		plugin.manager.removeHorseMember(horseIdentifier, playerName);
+		plugin.manager.removeHorseMember(horseIdentifier, UUIDUtils.getPlayerUUID(memberName));
 		
-		sender.sendMessage(this.getPrefix() + plugin.lang.get("removedMemberFromHorse").replace("%player", playerName).replace("%id", horseIdentifier));
+		sender.sendMessage(this.getPrefix() + plugin.lang.get("removedMemberFromHorse").replace("%player", memberName).replace("%id", horseIdentifier));
 	}
 }

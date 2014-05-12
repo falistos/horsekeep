@@ -25,7 +25,7 @@ public class CommandTeleportAll extends ConfigurableCommand {
 			return;
 		}
 		
-		List<String> horsesList = plugin.manager.getOwnedHorses(player);
+		List<String> horsesList = plugin.manager.getOwnedHorses(player.getUniqueId());
 		
 		if (horsesList.size() == 0)
 		{
