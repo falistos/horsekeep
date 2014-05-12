@@ -4,10 +4,13 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -47,6 +50,8 @@ public class HorseData {
 	}
 	
 	// Migration for player UUID
+	
+	@SuppressWarnings("deprecation")
 	public void migrateUUID()
 	{
 		ConfigurationSection horsesSection = this.getHorsesData().getConfigurationSection("horses");
@@ -72,6 +77,23 @@ public class HorseData {
 
 			this.getHorsesData().set("horses."+horseUUID+".ownerUUID", player.getUniqueId().toString());
 			this.getHorsesData().set("horses."+horseUUID+".owner", null);
+			
+			if (this.getHorsesData().isSet("horses."+horseUUID+".members"))
+			{
+				List<String> horsesList = this.getHorsesData().getStringList("horses."+horseUUID+".members");
+				
+				int i = 0;
+				
+		        for (String memberName : horsesList) {
+		        	OfflinePlayer member = Bukkit.getServer().getOfflinePlayer(memberName);
+		        	
+		        	horsesList.set(i, member.getUniqueId().toString());
+		        	i++;
+		        }
+		        
+		        this.getHorsesData().set("horses."+horseUUID+".members", horsesList);
+			}
+
 		}
 		
 		this.save();
