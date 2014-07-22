@@ -47,7 +47,10 @@ public class CommandSummon extends ConfigurableCommand {
 			return;
 		}
 		
-		plugin.manager.summon(horseIdentifier, player.getLocation());
+		if (!plugin.manager.summon(horseIdentifier, player.getLocation())) {
+			player.sendMessage(this.getPrefix() + ChatColor.RED+plugin.lang.get("notSummonedWrongWorld").replace("%id", horseIdentifier)); 
+            return;
+        }
         
 		player.sendMessage(this.getPrefix() + plugin.lang.get("horseSummoned"));
 	}
