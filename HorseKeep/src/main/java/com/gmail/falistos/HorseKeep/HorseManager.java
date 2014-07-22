@@ -358,6 +358,7 @@ public class HorseManager {
     public void store(Horse horse)
     {
     	this.data.getHorsesData().set("horses."+horse.getUniqueId().toString()+".stored", true);
+    	this.data.getHorsesData().set("horses."+horse.getUniqueId().toString()+".world", horse.getWorld().getUID().toString());
     	this.data.getHorsesData().set("horses."+horse.getUniqueId().toString()+".tamed", horse.isTamed());
     	this.data.getHorsesData().set("horses."+horse.getUniqueId().toString()+".variant", horse.getVariant().toString());
     	this.data.getHorsesData().set("horses."+horse.getUniqueId().toString()+".style", horse.getStyle().toString());
@@ -404,13 +405,23 @@ public class HorseManager {
     	return false;
     }
     
-    public void summon(String horseIdentifier, Location loc)
+    public boolean summon(String horseIdentifier, Location loc)
     {
     	this.data.reload();
     	
     	UUID horseUUID = this.getHorseUUID(horseIdentifier);
     	
     	ConfigurationSection horseCfgSection = this.data.getHorsesData().getConfigurationSection("horses."+horseUUID.toString());
+
+    	if (this.data.getHorsesData().isSet("horses."+horseUUID+".world"))
+        {
+            String worldId = this.data.getHorsesData().getString("horses."+horseUUID+".world");
+
+            if (!loc.getWorld().getUID().toString().equals(worldId)) {
+                // Refuse to summon horses between worlds
+                return false;
+            }
+        }
     	
     	Entity entity = loc.getWorld().spawnEntity(loc, EntityType.HORSE);
     	Horse spawnedHorse = (Horse) entity;
@@ -461,6 +472,8 @@ public class HorseManager {
     	this.data.getHorsesData().set("horses."+horseUUID.toString(), null);
     	
     	this.data.save();
+
+        return true;
     }
     
     public HorseTeleportResponse teleportHorse(UUID horseUUID, Location loc)
