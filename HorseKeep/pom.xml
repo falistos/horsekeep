@@ -15,7 +15,7 @@
             <resource>
                 <targetPath>.</targetPath>
                 <filtering>true</filtering>
-                <directory>${basedir}/src/main/resources/</directory>
+                <directory>${basedir}/resources/</directory>
             </resource>
         </resources>
     </build>
