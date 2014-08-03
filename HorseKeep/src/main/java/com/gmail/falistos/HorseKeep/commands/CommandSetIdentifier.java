@@ -1,10 +1,9 @@
-package main.java.com.gmail.falistos.HorseKeep.commands;
+package com.gmail.falistos.HorseKeep.commands;
 
+import com.gmail.falistos.HorseKeep.HorseKeep;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import main.java.com.gmail.falistos.HorseKeep.HorseKeep;
 
 public class CommandSetIdentifier extends ConfigurableCommand {
 	public CommandSetIdentifier(HorseKeep plugin, CommandSender sender, String[] args)

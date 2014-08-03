@@ -1,4 +1,4 @@
-package main.java.com.gmail.falistos.HorseKeep;
+package com.gmail.falistos.HorseKeep;
 
 public enum HorseTeleportResponse {
 

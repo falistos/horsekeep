@@ -1,56 +1,24 @@
-package main.java.com.gmail.falistos.HorseKeep;
+package com.gmail.falistos.HorseKeep;
 
-import java.io.IOException;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.UUID;
-
-import main.java.com.gmail.falistos.HorseKeep.commands.CommandAddMember;
-import main.java.com.gmail.falistos.HorseKeep.commands.CommandAdminList;
-import main.java.com.gmail.falistos.HorseKeep.commands.CommandAdminTransfer;
-import main.java.com.gmail.falistos.HorseKeep.commands.CommandDeleteMember;
-import main.java.com.gmail.falistos.HorseKeep.commands.CommandGetIdentifier;
-import main.java.com.gmail.falistos.HorseKeep.commands.CommandHelp;
-import main.java.com.gmail.falistos.HorseKeep.commands.CommandList;
-import main.java.com.gmail.falistos.HorseKeep.commands.CommandMembers;
-import main.java.com.gmail.falistos.HorseKeep.commands.CommandReload;
-import main.java.com.gmail.falistos.HorseKeep.commands.CommandSetIdentifier;
-import main.java.com.gmail.falistos.HorseKeep.commands.CommandStore;
-import main.java.com.gmail.falistos.HorseKeep.commands.CommandSummon;
-import main.java.com.gmail.falistos.HorseKeep.commands.CommandTeleport;
-import main.java.com.gmail.falistos.HorseKeep.commands.CommandTeleportAll;
-import main.java.com.gmail.falistos.HorseKeep.commands.CommandUnprotect;
+import com.gmail.falistos.HorseKeep.commands.*;
 import net.milkbowl.vault.permission.Permission;
-
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Chunk;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Horse;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.entity.EntityTameEvent;
-import org.bukkit.event.entity.PotionSplashEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.vehicle.VehicleEnterEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.IOException;
+import java.util.*;
+import java.util.Map.Entry;
 
 public class HorseKeep extends JavaPlugin implements Listener
 {
