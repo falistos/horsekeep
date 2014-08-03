@@ -1,5 +1,5 @@
 name: HorseKeep
-main: main.java.com.gmail.falistos.HorseKeep.HorseKeep
+main: com.gmail.falistos.HorseKeep.HorseKeep
 version: ${project.version}
 depends: [Vault]
 commands:
