@@ -1,4 +1,4 @@
-package main.java.com.gmail.falistos.HorseKeep;
+package com.gmail.falistos.HorseKeep;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -8,21 +8,21 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.UUID;
 
-import main.java.com.gmail.falistos.HorseKeep.commands.CommandAddMember;
-import main.java.com.gmail.falistos.HorseKeep.commands.CommandAdminList;
-import main.java.com.gmail.falistos.HorseKeep.commands.CommandAdminTransfer;
-import main.java.com.gmail.falistos.HorseKeep.commands.CommandDeleteMember;
-import main.java.com.gmail.falistos.HorseKeep.commands.CommandGetIdentifier;
-import main.java.com.gmail.falistos.HorseKeep.commands.CommandHelp;
-import main.java.com.gmail.falistos.HorseKeep.commands.CommandList;
-import main.java.com.gmail.falistos.HorseKeep.commands.CommandMembers;
-import main.java.com.gmail.falistos.HorseKeep.commands.CommandReload;
-import main.java.com.gmail.falistos.HorseKeep.commands.CommandSetIdentifier;
-import main.java.com.gmail.falistos.HorseKeep.commands.CommandStore;
-import main.java.com.gmail.falistos.HorseKeep.commands.CommandSummon;
-import main.java.com.gmail.falistos.HorseKeep.commands.CommandTeleport;
-import main.java.com.gmail.falistos.HorseKeep.commands.CommandTeleportAll;
-import main.java.com.gmail.falistos.HorseKeep.commands.CommandUnprotect;
+import com.gmail.falistos.HorseKeep.commands.CommandAddMember;
+import com.gmail.falistos.HorseKeep.commands.CommandAdminList;
+import com.gmail.falistos.HorseKeep.commands.CommandAdminTransfer;
+import com.gmail.falistos.HorseKeep.commands.CommandDeleteMember;
+import com.gmail.falistos.HorseKeep.commands.CommandGetIdentifier;
+import com.gmail.falistos.HorseKeep.commands.CommandHelp;
+import com.gmail.falistos.HorseKeep.commands.CommandList;
+import com.gmail.falistos.HorseKeep.commands.CommandMembers;
+import com.gmail.falistos.HorseKeep.commands.CommandReload;
+import com.gmail.falistos.HorseKeep.commands.CommandSetIdentifier;
+import com.gmail.falistos.HorseKeep.commands.CommandStore;
+import com.gmail.falistos.HorseKeep.commands.CommandSummon;
+import com.gmail.falistos.HorseKeep.commands.CommandTeleport;
+import com.gmail.falistos.HorseKeep.commands.CommandTeleportAll;
+import com.gmail.falistos.HorseKeep.commands.CommandUnprotect;
 import net.milkbowl.vault.permission.Permission;
 
 import org.bukkit.Bukkit;

@@ -1,4 +1,4 @@
-package main.java.com.gmail.falistos.HorseKeep;
+package com.gmail.falistos.HorseKeep;
 
 import java.util.ArrayList;
 import java.util.List;

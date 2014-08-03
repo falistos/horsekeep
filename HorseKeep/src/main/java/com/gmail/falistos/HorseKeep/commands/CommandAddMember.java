@@ -1,7 +1,7 @@
-package main.java.com.gmail.falistos.HorseKeep.commands;
+package com.gmail.falistos.HorseKeep.commands;
 
-import main.java.com.gmail.falistos.HorseKeep.HorseKeep;
-import main.java.com.gmail.falistos.HorseKeep.UUIDUtils;
+import com.gmail.falistos.HorseKeep.HorseKeep;
+import com.gmail.falistos.HorseKeep.UUIDUtils;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
