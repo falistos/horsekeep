@@ -3,12 +3,24 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>HorseKeep</groupId>
     <artifactId>HorseKeep</artifactId>
-    <version>0.3.1 BETA</version>
+    <version>0.3.2-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.5</maven.compiler.source>
         <maven.compiler.target>1.5</maven.compiler.target>
     </properties>
+    <build>
+        <resources>
+            <resource>
+                <targetPath>.</targetPath>
+                <filtering>true</filtering>
+                <directory>${basedir}/src/main/resources/</directory>
+                <includes>
+                    <include>plugin.yml</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
     <repositories>
         <!-- Bukkit can be found at the following repository -->
         <repository>
