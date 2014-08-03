@@ -1,14 +1,13 @@
 package com.gmail.falistos.HorseKeep.commands;
 
-import java.util.List;
-import java.util.UUID;
-
+import com.gmail.falistos.HorseKeep.HorseKeep;
+import com.gmail.falistos.HorseKeep.HorseTeleportResponse;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.gmail.falistos.HorseKeep.HorseKeep;
-import com.gmail.falistos.HorseKeep.HorseTeleportResponse;
+import java.util.List;
+import java.util.UUID;
 
 public class CommandTeleportAll extends ConfigurableCommand {
 	public CommandTeleportAll(HorseKeep plugin, CommandSender sender, String[] args)

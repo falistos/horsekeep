@@ -1,7 +1,6 @@
 package com.gmail.falistos.HorseKeep.commands;
 
 import com.gmail.falistos.HorseKeep.HorseKeep;
-
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 

@@ -1,14 +1,13 @@
 package com.gmail.falistos.HorseKeep.commands;
 
-import java.util.List;
-import java.util.UUID;
-
 import com.gmail.falistos.HorseKeep.HorseKeep;
 import com.gmail.falistos.HorseKeep.UUIDUtils;
-
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.List;
+import java.util.UUID;
 
 public class CommandMembers extends ConfigurableCommand {
 	public CommandMembers(HorseKeep plugin, CommandSender sender, String[] args)

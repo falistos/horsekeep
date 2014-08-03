@@ -1,11 +1,11 @@
 package com.gmail.falistos.HorseKeep;
 
-import java.io.File;
-import java.io.InputStream;
-
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
+
+import java.io.File;
+import java.io.InputStream;
 
 public class Locale {
 	
